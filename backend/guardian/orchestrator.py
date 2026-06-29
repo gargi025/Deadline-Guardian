@@ -1,28 +1,13 @@
-class GuardianOrchestrator:
-    """
-    Central brain of Deadline Guardian.
+from guardian.agents.planner import planner_agent
 
-    Decides which workflow or agent
-    should handle a request.
-    """
+
+class Guardian:
 
     def __init__(self):
-        pass
+        self.planner = planner_agent
 
-    async def route(self, request):
-        """
-        Placeholder.
+    def get_planner(self):
+        return self.planner
 
-        Later this will decide:
 
-        Planner
-
-        Scheduler
-
-        Risk
-
-        Replay
-
-        Voice
-        """
-        return None
+guardian = Guardian()

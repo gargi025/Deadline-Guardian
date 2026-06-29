@@ -1,15 +1,19 @@
-"""
-Planner tools.
+from typing import List
 
-Initially empty.
 
-Later this file will contain:
+def decompose_task(task: str) -> List[str]:
+    """
+    Break a task into generic executable steps.
 
-Task decomposition
+    Use this tool whenever a user provides
+    a high-level task that needs planning.
+    """
 
-Effort estimation
-
-Calendar lookup
-
-Dependency analysis
-"""
+    return [
+        f"Understand the requirements of '{task}'",
+        "Research any missing concepts",
+        "Break the work into smaller pieces",
+        "Complete the implementation",
+        "Review the work",
+        "Submit before the deadline",
+    ]
