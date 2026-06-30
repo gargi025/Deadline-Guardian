@@ -22,8 +22,8 @@ type Props = {
 export function TaskComposer({ onGenerate, isGenerating }: Props) {
   const [task, setTask] = useState("")
   const [listening, setListening] = useState(false)
-  const [leadership, setLeadership] = useState("supportive")
-  const [workStyle, setWorkStyle] = useState("deep-focus")
+  const [leadership, setLeadership] = useState("commander")
+  const [workStyle, setWorkStyle] = useState("deep-work")
 
   const toggleVoice = () => {
     setListening((prev) => !prev)
@@ -87,10 +87,11 @@ export function TaskComposer({ onGenerate, isGenerating }: Props) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="supportive">Supportive coach</SelectItem>
-                <SelectItem value="direct">Direct & demanding</SelectItem>
-                <SelectItem value="strategic">Strategic advisor</SelectItem>
-                <SelectItem value="accountability">Accountability partner</SelectItem>
+                <SelectItem value="commander">Commander</SelectItem>
+                <SelectItem value="mentor">Mentor</SelectItem>
+                <SelectItem value="roaster">Roaster</SelectItem>
+                <SelectItem value="zen">Zen</SelectItem>
+                <SelectItem value="jarvis">Jarvis</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -104,10 +105,11 @@ export function TaskComposer({ onGenerate, isGenerating }: Props) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="deep-focus">Deep focus blocks</SelectItem>
-                <SelectItem value="sprints">Short sprints</SelectItem>
-                <SelectItem value="steady">Steady daily pace</SelectItem>
-                <SelectItem value="night-owl">Night owl bursts</SelectItem>
+                <SelectItem value="deep-work">Deep Work</SelectItem>
+                <SelectItem value="night-owl">Night Owl</SelectItem>
+                <SelectItem value="pomodoro">Pomodoro</SelectItem>
+                <SelectItem value="finish-early">Finish Early</SelectItem>
+                <SelectItem value="steady-pace">Steady Pace</SelectItem>
               </SelectContent>
             </Select>
           </div>

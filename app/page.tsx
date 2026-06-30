@@ -13,6 +13,9 @@ export default function Page() {
   const [showFutures, setShowFutures] = useState(false)
   const [selected, setSelected] = useState<FutureScenario["id"] | null>(null)
   const futuresRef = useRef<HTMLDivElement>(null)
+  const timelineRef = useRef<HTMLDivElement>(null)
+
+  const selectedFuture = FUTURES.find((f) => f.id === selected) ?? null
 
   const handleGenerate = () => {
     setIsGenerating(true)
@@ -23,6 +26,13 @@ export default function Page() {
         futuresRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
       })
     }, 1600)
+  }
+
+  const handleSelect = (id: FutureScenario["id"]) => {
+    setSelected(id)
+    setTimeout(() => {
+      timelineRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    }, 350)
   }
 
   return (
@@ -51,7 +61,7 @@ export default function Page() {
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-border/80 bg-secondary/40 px-3.5 py-1.5 text-xs text-muted-foreground"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-success" />
-            Your AI productivity companion
+            Multi-Agent AI Planning
           </motion.div>
 
           <motion.h1
@@ -88,21 +98,23 @@ export default function Page() {
               >
                 <div className="mb-10 text-center">
                   <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                    Three futures, one decision
+                    Three possible outcomes. One informed decision.
                   </h2>
-                  <p className="mx-auto mt-3 max-w-lg text-pretty text-muted-foreground">
-                    Guardian simulated where each path leads. Choose the future you want to live.
+                  <p className="mx-auto mt-3 max-w-xl text-pretty text-muted-foreground">
+                    Guardian simulates multiple realistic paths so you can understand the
+                    consequences before committing to a plan.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-3">
+                <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
                   {FUTURES.map((future, i) => (
                     <FutureCard
                       key={future.id}
                       future={future}
                       index={i}
                       selected={selected === future.id}
-                      onSelect={setSelected}
+                      dimmed={selected !== null && selected !== future.id}
+                      onSelect={handleSelect}
                     />
                   ))}
                 </div>
@@ -111,7 +123,9 @@ export default function Page() {
           </AnimatePresence>
         </section>
 
-        <TodayTimeline />
+        <div ref={timelineRef} className="scroll-mt-20">
+          <TodayTimeline selectedFuture={selectedFuture} />
+        </div>
 
         <footer className="border-t border-border/60 py-8">
           <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 text-sm text-muted-foreground sm:flex-row">
