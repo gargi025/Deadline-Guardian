@@ -12,6 +12,7 @@ app.include_router(futures_router)
 
 origins = [
     "http://localhost:3000",
+    "https://deadline-guardian-4ij7.vercel.app",
 ]
 
 app.add_middleware(
