@@ -8,6 +8,7 @@ import { FutureCard } from "@/components/future-card"
 import { TodayTimeline } from "@/components/today-timeline"
 import type { FutureScenario } from "@/lib/futures-data"
 import GuardianFocus from "@/components/guardian-focus"
+import MissionBrief from "@/components/mission-brief"
 
 const thinkingSteps = [
   "Understanding your deadline",
@@ -208,6 +209,11 @@ export default function Page() {
 
             </motion.div>
           )}
+
+          {selectedFuture && (
+            <MissionBrief future={selectedFuture} />
+          )}
+
           <TodayTimeline selectedFuture={selectedFuture} />
         </div>
 

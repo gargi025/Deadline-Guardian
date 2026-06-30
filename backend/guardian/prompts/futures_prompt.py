@@ -71,6 +71,13 @@ Avoid generic productivity tips.
 Timeline
 
 Generate EXACTLY FOUR events.
+Timeline events should represent actionable work sessions, not outcomes.
+
+Correct:
+Train first model
+
+Incorrect:
+Model is successfully trained.
 
 Each event contains:
 
@@ -84,7 +91,29 @@ Tomorrow
 Day 3
 Submission Day
 
-Timeline titles must be complete sentences.
+Timeline Title Rules
+
+Each timeline title MUST:
+
+- be 3–8 words
+- be calendar-friendly
+- start with an action verb
+- be under 50 characters
+- describe one concrete task
+
+Good examples:
+
+Plan project
+Explore dataset
+Train first model
+Evaluate results
+Prepare final report
+Submit assignment
+
+Bad examples:
+
+A detailed project plan and data exploration are completed efficiently.
+The machine learning model is fully trained and evaluated.
 
 Never generate:
 

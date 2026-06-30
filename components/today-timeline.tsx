@@ -1,10 +1,16 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle2, Circle, CalendarClock } from "lucide-react"
+import {
+  CheckCircle2,
+  Circle,
+  CalendarClock,
+  CalendarPlus,
+} from "lucide-react"
 import { cn } from "@/lib/utils"
 import { TODAY_TIMELINE, type FutureScenario, type TimelineItem } from "@/lib/futures-data"
-
+import { openGoogleCalendar } from "@/lib/calendar"
+import { Button } from "@/components/ui/button"
 type Status = "done" | "active" | "upcoming"
 
 // Derive a simple schedule state: items before the active one are done.
@@ -139,6 +145,22 @@ export function TodayTimeline({ selectedFuture }: Props) {
           </motion.ol>
         </AnimatePresence>
       </div>
+
+      {selectedFuture && (
+        <Button
+          className="mt-6 w-full rounded-xl"
+          onClick={() =>
+            openGoogleCalendar(
+              selectedFuture.title,
+              selectedFuture.timeline
+            )
+          }
+        >
+          <CalendarPlus className="mr-2 h-4 w-4" />
+          Add Execution Plan to Google Calendar
+        </Button>
+      )}
+
     </section>
   )
 }
