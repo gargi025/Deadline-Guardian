@@ -6,17 +6,18 @@ import { SiteHeader } from "@/components/site-header"
 import { TaskComposer } from "@/components/task-composer"
 import { FutureCard } from "@/components/future-card"
 import { TodayTimeline } from "@/components/today-timeline"
-import { FUTURES, type FutureScenario } from "@/lib/futures-data"
+import type { FutureScenario } from "@/lib/futures-data"
 import { data } from "framer-motion/client"
 
 export default function Page() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [showFutures, setShowFutures] = useState(false)
+  const [futures, setFutures] = useState<FutureScenario[]>([])
   const [selected, setSelected] = useState<FutureScenario["id"] | null>(null)
   const futuresRef = useRef<HTMLDivElement>(null)
   const timelineRef = useRef<HTMLDivElement>(null)
 
-  const selectedFuture = FUTURES.find((f) => f.id === selected) ?? null
+  const selectedFuture = futures.find((f) => f.id === selected) ?? null
 
   const handleGenerate = async (data: {
     task: string
@@ -47,14 +48,9 @@ export default function Page() {
           }),
         }
       )
-      console.log("Status:", response.status)
-
       const result = await response.json()
 
-      console.log("Backend response:", result)
-
-      console.log(result)
-
+      setFutures(result.futures)
       setShowFutures(true)
 
       requestAnimationFrame(() => {
@@ -154,7 +150,7 @@ export default function Page() {
                 </div>
 
                 <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
-                  {FUTURES.map((future, i) => (
+                  {futures.map((future, i) => (
                     <FutureCard
                       key={future.id}
                       future={future}

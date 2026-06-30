@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Check, Activity, ArrowRight, ChevronDown, ShieldCheck, Lightbulb } from "lucide-react"
+import { Check, Activity, ArrowRight, ShieldCheck, Lightbulb } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import type { FutureScenario, StressLevel } from "@/lib/futures-data"
@@ -23,13 +22,12 @@ type Props = {
 }
 
 export function FutureCard({ future, index, selected, dimmed, onSelect }: Props) {
-  const highlight = future.highlight
-  const [showReasoning, setShowReasoning] = useState(false)
+  const highlight = future.id === "future-2"
 
   const barColor =
-    future.successProbability >= 80
+    future.success_probability >= 80
       ? "bg-success"
-      : future.successProbability >= 60
+      : future.success_probability >= 60
         ? "bg-primary"
         : "bg-warning"
 
@@ -55,14 +53,16 @@ export function FutureCard({ future, index, selected, dimmed, onSelect }: Props)
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow-lg shadow-primary/30">
             <ShieldCheck className="h-3.5 w-3.5" />
-            Recommended by Guardian
+            Guardian Recommendation
           </span>
         </div>
       )}
 
       <header className={cn(highlight && "mt-2")}>
         <h3 className="text-lg font-semibold tracking-tight">{future.title}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{future.subtitle}</p>
+        <p className="mt-1 italic text-sm text-muted-foreground">
+          {future.quote}
+        </p>
       </header>
 
       {/* Chance of Success — primary visual focus */}
@@ -72,7 +72,7 @@ export function FutureCard({ future, index, selected, dimmed, onSelect }: Props)
         </p>
         <div className="mt-1 flex items-end gap-2">
           <span className="font-mono text-4xl font-semibold leading-none tracking-tight text-foreground">
-            {future.successProbability}
+            {future.success_probability}
           </span>
           <span className="mb-0.5 text-xl font-medium text-muted-foreground">%</span>
         </div>
@@ -80,7 +80,7 @@ export function FutureCard({ future, index, selected, dimmed, onSelect }: Props)
           <motion.div
             className={cn("h-full rounded-full", barColor)}
             initial={{ width: 0 }}
-            whileInView={{ width: `${future.successProbability}%` }}
+            whileInView={{ width: `${future.success_probability}%` }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, delay: 0.2 + index * 0.1, ease: "easeOut" }}
           />
@@ -95,10 +95,10 @@ export function FutureCard({ future, index, selected, dimmed, onSelect }: Props)
         <span
           className={cn(
             "rounded-full px-2.5 py-0.5 text-xs font-medium ring-1",
-            stressStyles[future.stressLevel],
+            stressStyles[future.stress_level],
           )}
         >
-          {future.stressLevel}
+          {future.stress_level}
         </span>
       </div>
 
@@ -128,39 +128,15 @@ export function FutureCard({ future, index, selected, dimmed, onSelect }: Props)
       </div>
 
       {/* Why this plan? accordion */}
-      <div className="mt-3 overflow-hidden rounded-xl border border-border/60 bg-background/30">
-        <button
-          type="button"
-          onClick={() => setShowReasoning((v) => !v)}
-          aria-expanded={showReasoning}
-          className="flex w-full items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary/30"
-        >
-          Why this plan?
-          <ChevronDown
-            className={cn("h-4 w-4 text-muted-foreground transition-transform", showReasoning && "rotate-180")}
-          />
-        </button>
-        <AnimatePresence initial={false}>
-          {showReasoning && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <ul className="space-y-2 px-4 pb-4 pt-1">
-                {future.reasoning.map((reason) => (
-                  <li key={reason} className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary/70" />
-                    {reason}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <div className="mt-4 rounded-xl border border-border/60 bg-background/30 p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Why this future?
+        </p>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          Guardian estimated this outcome using your task, work style,
+          leadership personality, timeline and predicted execution quality.
+        </p>
       </div>
-
       <div className="mt-6 flex-1" />
 
       <Button
@@ -170,7 +146,7 @@ export function FutureCard({ future, index, selected, dimmed, onSelect }: Props)
       >
         {selected ? (
           <>
-            <Check className="h-4 w-4" /> Plan selected
+            <Check className="h-4 w-4" /> Future Locked In
           </>
         ) : (
           <>

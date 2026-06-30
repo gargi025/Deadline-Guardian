@@ -1,4 +1,6 @@
 from fastapi import APIRouter
+
+from backend.guardian.workflows.futures import guardian_futures
 from pydantic import BaseModel
 
 router = APIRouter()
@@ -11,22 +13,12 @@ class FutureRequest(BaseModel):
 
 
 @router.post("/guardian-futures")
-async def guardian_futures(request: FutureRequest):
-    """
-    Temporary endpoint.
+async def generate(request: FutureRequest):
 
-    We'll replace the hardcoded response with Gemini
-    in the next step.
-    """
+    futures = guardian_futures.generate(
+        task=request.task,
+        work_style=request.work_style,
+        leadership_style=request.leadership_style,
+    )
 
-    return {
-        "task": request.task,
-        "work_style": request.work_style,
-        "leadership_style": request.leadership_style,
-        "futures": [
-            {
-                "id": "guardian",
-                "title": "The Guardian Path"
-            }
-        ]
-    }
+    return futures

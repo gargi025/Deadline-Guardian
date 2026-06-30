@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { Mic, Sparkles, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -13,6 +13,15 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
+
+const loadingMessages = [
+  "Understanding your deadline...",
+  "Learning your work style...",
+  "Consulting your AI team...",
+  "Simulating three futures...",
+  "Comparing outcomes...",
+  "Preparing your recommendation..."
+]
 
 type Props = {
   onGenerate: (data: {
@@ -28,6 +37,22 @@ export function TaskComposer({ onGenerate, isGenerating }: Props) {
   const [listening, setListening] = useState(false)
   const [leadership, setLeadership] = useState("commander")
   const [workStyle, setWorkStyle] = useState("deep_work")
+  const [loadingIndex, setLoadingIndex] = useState(0)
+
+  useEffect(() => {
+
+    if (!isGenerating) {
+      setLoadingIndex(0)
+      return
+    }
+
+    const timer = setInterval(() => {
+      setLoadingIndex((i) => (i + 1) % loadingMessages.length)
+    }, 1000)
+
+    return () => clearInterval(timer)
+
+  }, [isGenerating])
 
   const toggleVoice = () => {
     setListening((prev) => !prev)
@@ -136,7 +161,7 @@ export function TaskComposer({ onGenerate, isGenerating }: Props) {
           {isGenerating ? (
             <>
               <Loader2 className="h-5 w-5 animate-spin" />
-              Guardian is simulating your future...
+              {loadingMessages[loadingIndex]}
             </>
           ) : (
             <>
