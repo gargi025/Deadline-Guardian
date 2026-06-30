@@ -53,7 +53,7 @@ export function FutureCard({ future, index, selected, dimmed, onSelect }: Props)
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow-lg shadow-primary/30">
             <ShieldCheck className="h-3.5 w-3.5" />
-            Guardian Recommendation
+            Recommended Future
           </span>
         </div>
       )}
@@ -150,7 +150,7 @@ export function FutureCard({ future, index, selected, dimmed, onSelect }: Props)
           </>
         ) : (
           <>
-            Follow this Plan
+            Commit to this Future
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </>
         )}

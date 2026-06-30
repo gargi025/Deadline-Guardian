@@ -7,13 +7,24 @@ import { TaskComposer } from "@/components/task-composer"
 import { FutureCard } from "@/components/future-card"
 import { TodayTimeline } from "@/components/today-timeline"
 import type { FutureScenario } from "@/lib/futures-data"
-import { data } from "framer-motion/client"
+import GuardianFocus from "@/components/guardian-focus"
+
+const thinkingSteps = [
+  "Understanding your deadline",
+  "Analyzing your work style",
+  "Consulting specialist agents",
+  "Simulating three futures",
+  "Comparing outcomes",
+  "Selecting the optimal path"
+]
 
 export default function Page() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [showFutures, setShowFutures] = useState(false)
   const [futures, setFutures] = useState<FutureScenario[]>([])
   const [selected, setSelected] = useState<FutureScenario["id"] | null>(null)
+  const [thinking, setThinking] = useState(false)
+  const [committing, setCommitting] = useState(false)
   const futuresRef = useRef<HTMLDivElement>(null)
   const timelineRef = useRef<HTMLDivElement>(null)
 
@@ -24,16 +35,18 @@ export default function Page() {
     workStyle: string
     leadershipStyle: string
   }) => {
-    console.log("handleGenerate called", data)
 
 
     try {
 
       setIsGenerating(true)
+      setThinking(true)
 
-      console.log("Sending request...")
+      const API_URL =
+        process.env.NEXT_PUBLIC_API_URL ||
+        "http://127.0.0.1:8000"
       const response = await fetch(
-        "http://127.0.0.1:8000/guardian-futures",
+        `${API_URL}/guardian-futures`,
         {
           method: "POST",
 
@@ -51,6 +64,10 @@ export default function Page() {
       const result = await response.json()
 
       setFutures(result.futures)
+
+      await new Promise(resolve => setTimeout(resolve, 3500))
+
+      setThinking(false)
       setShowFutures(true)
 
       requestAnimationFrame(() => {
@@ -71,11 +88,20 @@ export default function Page() {
     }
   }
 
-  const handleSelect = (id: FutureScenario["id"]) => {
+  const handleSelect = async (id: FutureScenario["id"]) => {
+
     setSelected(id)
-    setTimeout(() => {
-      timelineRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-    }, 350)
+
+    setCommitting(true)
+
+    await new Promise(r => setTimeout(r, 1800))
+
+    setCommitting(false)
+
+    timelineRef.current?.scrollIntoView({
+      behavior: "smooth"
+    })
+
   }
 
   return (
@@ -119,7 +145,7 @@ export default function Page() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-5 max-w-xl text-pretty text-lg text-muted-foreground sm:text-xl"
           >
             Don&apos;t just manage deadlines. Change your future.
@@ -167,8 +193,26 @@ export default function Page() {
         </section>
 
         <div ref={timelineRef} className="scroll-mt-20">
+          {committing && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="mb-10 text-center"
+            >
+
+              Guardian has committed to this future.
+
+              Building your execution timeline...
+
+            </motion.div>
+          )}
           <TodayTimeline selectedFuture={selectedFuture} />
         </div>
+
+        <section className="mx-auto max-w-6xl px-5 pb-24">
+          <GuardianFocus />
+        </section>
 
         <footer className="border-t border-border/60 py-8">
           <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 text-sm text-muted-foreground sm:flex-row">
