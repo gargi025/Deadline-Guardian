@@ -3,17 +3,15 @@ from typing import List
 
 def decompose_task(task: str) -> List[str]:
     """
-    Break a task into generic executable steps.
+    Fallback decomposition tool.
 
-    Use this tool whenever a user provides
-    a high-level task that needs planning.
+    Use when the task is generic.
     """
 
     return [
-        f"Understand the requirements of '{task}'",
-        "Research any missing concepts",
-        "Break the work into smaller pieces",
-        "Complete the implementation",
-        "Review the work",
-        "Submit before the deadline",
+        "Understand requirements",
+        "Research",
+        "Implement",
+        "Review",
+        "Finalize",
     ]

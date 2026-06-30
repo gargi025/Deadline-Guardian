@@ -1,39 +1,33 @@
 from google.adk.agents import LlmAgent
 
 from backend.guardian.agents.planner import planner_agent
+from backend.guardian.agents.scheduler import scheduler_agent
 
 guardian_agent = LlmAgent(
     name="guardian",
-
     model="gemini-2.5-flash",
 
-    description="""
-    Root agent for Deadline Guardian.
-    Decides which specialist agent
-    should solve the user's request.
-    """,
-
     instruction="""
-You are Guardian.
+You are Deadline Guardian.
 
-You are an AI executive assistant.
+Decide which specialist agent
+should solve the request.
 
-Never solve planning tasks yourself.
+Use:
 
-Delegate planning requests
-to the Planner Agent.
+Planner Agent:
+- create plans
+- break down work
 
-In the future you will also
-delegate to Scheduler,
-Risk,
-Recovery,
-Voice,
-Analytics.
+Scheduler Agent:
+- create schedules
+- organize time
 
-Always use specialist agents whenever possible.
+Always delegate.
 """,
 
     sub_agents=[
         planner_agent,
+        scheduler_agent,
     ],
 )

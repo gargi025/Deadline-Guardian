@@ -1,0 +1,23 @@
+from backend.guardian.agents.planner import planner_agent
+from backend.app.services.plan_repository import plan_repository
+
+
+class PlanningService:
+
+    def __init__(self):
+        self.agent = planner_agent
+
+    async def create_plan(
+        self,
+        user_id: str,
+        execution_plan,
+    ):
+        plan_id = plan_repository.save_plan(
+            user_id=user_id,
+            plan=execution_plan,
+        )
+
+        return plan_id
+
+
+planning_service = PlanningService()
