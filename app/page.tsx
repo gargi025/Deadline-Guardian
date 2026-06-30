@@ -75,7 +75,7 @@ export default function Page() {
       requestAnimationFrame(() => {
         futuresRef.current?.scrollIntoView({
           behavior: "smooth",
-          block: "start",
+          block: "nearest",
         })
       })
 
@@ -159,7 +159,7 @@ export default function Page() {
         </section>
 
         {/* Futures */}
-        <section id="futures" ref={futuresRef} className="mx-auto max-w-6xl px-5 pb-24 scroll-mt-24">
+        <section id="futures" ref={futuresRef} className="mx-auto flex min-h-[90vh] max-w-6xl flex-col justify-center px-5 py-32 scroll-mt-24">
           <AnimatePresence>
             {showFutures && (
               <motion.div
@@ -194,7 +194,7 @@ export default function Page() {
           </AnimatePresence>
         </section>
 
-        <div ref={timelineRef} className="scroll-mt-20">
+        <section id="timeline" ref={timelineRef} className="mx-auto flex min-h-[90vh] max-w-6xl flex-col justify-center px-5 py-32 scroll-mt-24">
           {committing && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -202,12 +202,15 @@ export default function Page() {
               transition={{ duration: 0.4 }}
               className="mb-10 text-center"
             >
+              <p className="text-xl font-semibold">
+                Future Locked In
+              </p>
 
-              Guardian has committed to this future.
-
-              Building your execution timeline...
-
+              <p className="mt-2 text-muted-foreground">
+                Guardian is preparing your mission...
+              </p>
             </motion.div>
+
           )}
 
           {selectedFuture && (
@@ -215,9 +218,9 @@ export default function Page() {
           )}
 
           <TodayTimeline selectedFuture={selectedFuture} />
-        </div>
+        </section>
 
-        <section className="mx-auto max-w-6xl px-5 pb-24">
+        <section className="mx-auto flex min-h-[90vh] max-w-6xl flex-col justify-center px-5 py-32">
           <GuardianFocus />
         </section>
 

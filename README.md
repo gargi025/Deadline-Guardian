@@ -81,7 +81,7 @@ Each future includes:
 - Leadership-aware motivational quote
 - Four-stage execution timeline
 
-After selecting a future, users transition directly into **Guardian Focus**, an integrated Pomodoro workspace designed for deep work.
+After selecting a future, users are presented with a Mission Brief summarizing the chosen execution strategy, followed by an Execution Timeline, Google Calendar export, and Guardian Focus, an integrated Pomodoro workspace that bridges planning and execution.
 
 ---
 
@@ -141,15 +141,39 @@ This bridges the gap between planning and execution.
 
 ---
 
+## Mission Brief Dashboard
+
+After committing to a future, Guardian generates a concise mission briefing that summarizes:
+
+- Selected execution strategy
+- Success probability
+- Stress level
+- Next milestone
+
+This provides users with a clear overview before beginning execution.
+
+---
+
+## Google Calendar Integration
+
+Users can instantly export their AI-generated execution plan directly into Google Calendar.
+
+Guardian automatically prepares a calendar event containing the complete execution strategy, making it easy to continue the plan outside the application.
+
+---
+
 ## Modern Interactive UI
 
 Built with:
 
-- Smooth animations
 - Progressive AI thinking states
-- Dynamic future comparison
-- Interactive planning cards
-- Responsive design
+- Interactive future comparison
+- Mission Brief dashboard
+- Execution timeline visualization
+- Google Calendar export
+- Guardian Focus workspace
+- Smooth Framer Motion animations
+- Responsive modern interface
 
 ---
 
@@ -208,6 +232,9 @@ Centralized backend monitoring and debugging.
         Next.js + React Frontend
                       │
                       ▼
+         Mission Brief & Timeline
+                      │
+                      ▼
         FastAPI Backend (Cloud Run)
                       │
                       ▼
@@ -217,10 +244,11 @@ Centralized backend monitoring and debugging.
       Structured Future Simulation
                       │
                       ▼
-      Interactive Future Comparison
+      Google Calendar Integration
                       │
                       ▼
       Guardian Focus Workspace
+
 ```
 
 ---
@@ -258,7 +286,6 @@ Centralized backend monitoring and debugging.
 
 # Future Scope
 
-- Google Calendar integration
 - Gmail deadline extraction
 - AI schedule optimization
 - Firebase Authentication
@@ -272,3 +299,13 @@ Centralized backend monitoring and debugging.
 # Tagline
 
 > **Predict the Future. Beat Every Deadline.**
+
+---
+
+# License
+
+This project is licensed under the MIT License.
+
+See the LICENSE file for details.
+
+---
