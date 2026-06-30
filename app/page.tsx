@@ -45,6 +45,7 @@ export default function Page() {
       const API_URL =
         process.env.NEXT_PUBLIC_API_URL ||
         "https://deadline-guardian-api-482683129737.asia-south1.run.app"
+      console.log("API URL:", API_URL)
       const response = await fetch(
         `${API_URL}/guardian-futures`,
         {

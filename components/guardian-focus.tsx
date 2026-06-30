@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button"
 import { messages } from "@/lib/pomodoro-messages"
 
 const personalities = [
-    "commander",
-    "roaster",
-    "mom",
-    "coach",
-    "zen",
+    "Commander",
+    "Roaster",
+    "Indian Mom",
+    "Coach",
+    "Zen",
 ] as const
 
 export default function GuardianFocus() {

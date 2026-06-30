@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { motion } from "framer-motion"
 import { Check, Activity, ArrowRight, ShieldCheck, Lightbulb } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"

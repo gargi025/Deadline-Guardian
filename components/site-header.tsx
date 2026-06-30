@@ -27,19 +27,8 @@ export function SiteHeader() {
           <a href="#timeline" className="transition-colors hover:text-foreground">
             Timeline
           </a>
-          <a href="#" className="transition-colors hover:text-foreground">
-            Pricing
-          </a>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
-            Sign in
-          </Button>
-          <Button size="sm" className="rounded-full px-4">
-            Get started
-          </Button>
-        </div>
       </div>
     </motion.header>
   )
