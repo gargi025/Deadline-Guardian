@@ -15,7 +15,11 @@ import {
 import { cn } from "@/lib/utils"
 
 type Props = {
-  onGenerate: () => void
+  onGenerate: (data: {
+    task: string
+    leadershipStyle: string
+    workStyle: string
+  }) => void
   isGenerating: boolean
 }
 
@@ -23,7 +27,7 @@ export function TaskComposer({ onGenerate, isGenerating }: Props) {
   const [task, setTask] = useState("")
   const [listening, setListening] = useState(false)
   const [leadership, setLeadership] = useState("commander")
-  const [workStyle, setWorkStyle] = useState("deep-work")
+  const [workStyle, setWorkStyle] = useState("deep_work")
 
   const toggleVoice = () => {
     setListening((prev) => !prev)
@@ -88,10 +92,10 @@ export function TaskComposer({ onGenerate, isGenerating }: Props) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="commander">Commander</SelectItem>
-                <SelectItem value="mentor">Mentor</SelectItem>
                 <SelectItem value="roaster">Roaster</SelectItem>
+                <SelectItem value="indian-mom">Indian Mom</SelectItem>
+                <SelectItem value="coach">Coach</SelectItem>
                 <SelectItem value="zen">Zen</SelectItem>
-                <SelectItem value="jarvis">Jarvis</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -105,11 +109,11 @@ export function TaskComposer({ onGenerate, isGenerating }: Props) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="deep-work">Deep Work</SelectItem>
-                <SelectItem value="night-owl">Night Owl</SelectItem>
+                <SelectItem value="deep_work">Deep Work</SelectItem>
+                <SelectItem value="night_owl">Night Owl</SelectItem>
                 <SelectItem value="pomodoro">Pomodoro</SelectItem>
-                <SelectItem value="finish-early">Finish Early</SelectItem>
-                <SelectItem value="steady-pace">Steady Pace</SelectItem>
+                <SelectItem value="finish_early">Finish Early</SelectItem>
+                <SelectItem value="steady_pace">Steady Pace</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -119,14 +123,20 @@ export function TaskComposer({ onGenerate, isGenerating }: Props) {
       <div className="p-2 pt-3">
         <Button
           size="lg"
-          onClick={onGenerate}
-          disabled={isGenerating}
+          onClick={() =>
+            onGenerate({
+              task,
+              leadershipStyle: leadership,
+              workStyle,
+            })
+          }
+          disabled={isGenerating || !task.trim()}
           className="group w-full rounded-xl text-base font-semibold shadow-lg shadow-primary/20"
         >
           {isGenerating ? (
             <>
               <Loader2 className="h-5 w-5 animate-spin" />
-              Simulating your futures…
+              Guardian is simulating your future...
             </>
           ) : (
             <>

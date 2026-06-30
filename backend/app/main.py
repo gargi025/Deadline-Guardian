@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from backend.app.api.futures import router as futures_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -6,6 +7,8 @@ app = FastAPI(
     description="AI-powered executive assistant backend",
     version="1.0.0",
 )
+
+app.include_router(futures_router)
 
 origins = [
     "http://localhost:3000",

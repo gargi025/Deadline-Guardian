@@ -7,6 +7,7 @@ import { TaskComposer } from "@/components/task-composer"
 import { FutureCard } from "@/components/future-card"
 import { TodayTimeline } from "@/components/today-timeline"
 import { FUTURES, type FutureScenario } from "@/lib/futures-data"
+import { data } from "framer-motion/client"
 
 export default function Page() {
   const [isGenerating, setIsGenerating] = useState(false)
@@ -17,15 +18,61 @@ export default function Page() {
 
   const selectedFuture = FUTURES.find((f) => f.id === selected) ?? null
 
-  const handleGenerate = () => {
-    setIsGenerating(true)
-    setTimeout(() => {
-      setIsGenerating(false)
+  const handleGenerate = async (data: {
+    task: string
+    workStyle: string
+    leadershipStyle: string
+  }) => {
+    console.log("handleGenerate called", data)
+
+
+    try {
+
+      setIsGenerating(true)
+
+      console.log("Sending request...")
+      const response = await fetch(
+        "http://127.0.0.1:8000/guardian-futures",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            task: data.task,
+            work_style: data.workStyle,
+            leadership_style: data.leadershipStyle,
+          }),
+        }
+      )
+      console.log("Status:", response.status)
+
+      const result = await response.json()
+
+      console.log("Backend response:", result)
+
+      console.log(result)
+
       setShowFutures(true)
+
       requestAnimationFrame(() => {
-        futuresRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+        futuresRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        })
       })
-    }, 1600)
+
+    } catch (err) {
+
+      console.error(err)
+
+    } finally {
+
+      setIsGenerating(false)
+
+    }
   }
 
   const handleSelect = (id: FutureScenario["id"]) => {
