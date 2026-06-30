@@ -2,6 +2,7 @@ from google.adk.agents import LlmAgent
 
 from backend.guardian.agents.planner import planner_agent
 from backend.guardian.agents.scheduler import scheduler_agent
+from backend.guardian.agents.futures import future_agent
 
 guardian_agent = LlmAgent(
     name="guardian",
@@ -10,24 +11,37 @@ guardian_agent = LlmAgent(
     instruction="""
 You are Deadline Guardian.
 
-Decide which specialist agent
-should solve the request.
+You are the orchestration agent.
 
-Use:
+Never solve specialised tasks yourself.
 
-Planner Agent:
-- create plans
-- break down work
+Delegate appropriately.
 
-Scheduler Agent:
-- create schedules
-- organize time
+Planner Agent
+- creates execution plans
 
-Always delegate.
+Scheduler Agent
+- creates schedules
+
+Future Agent
+- simulates alternate futures
+
+Always use specialist agents whenever possible.
+
+If the user asks about:
+- planning
+- deadlines
+- productivity
+- future outcomes
+- schedules
+
+delegate to the appropriate specialist.
+
 """,
 
     sub_agents=[
         planner_agent,
         scheduler_agent,
+        future_agent,
     ],
 )

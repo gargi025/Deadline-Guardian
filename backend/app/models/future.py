@@ -1,16 +1,16 @@
-from pydantic import BaseModel
 from typing import List
+from pydantic import BaseModel
 
 
-class FutureTask(BaseModel):
+class TimelineItem(BaseModel):
+    time: str
     title: str
-    start: str
-    duration: str
 
 
 class FutureScenario(BaseModel):
+    id: str
+
     title: str
-    subtitle: str
 
     success_probability: int
 
@@ -20,8 +20,10 @@ class FutureScenario(BaseModel):
 
     recommendation: str
 
-    tasks: List[FutureTask]
+    quote: str
+
+    timeline: List[TimelineItem]
 
 
-class FutureSimulation(BaseModel):
+class GuardianFutures(BaseModel):
     futures: List[FutureScenario]
